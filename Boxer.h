@@ -2,8 +2,11 @@
 //  Boxer.h
 //  BoxingGame
 //
-//  Created by Aiden Ramos on 5/17/25.
+//  
 //
+#ifndef BOXER_H
+#define BOXER_H
+#include <string>
 
 //Boxer Struct
 struct Boxer {
@@ -17,4 +20,16 @@ struct Boxer {
     int DMG;
     //quickness
     int QCK;
+    //defense
+    int DEF;
 };
+//Boxer's who are defined in BoxerStats.cpp
+extern Boxer RayStevens;
+extern Boxer FrankRodgers;
+extern Boxer JayNeil;
+extern Boxer IssacXaiver;
+
+void printBoxerNames();
+void InitBoxers();
+
+#endif
