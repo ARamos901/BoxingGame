@@ -14,10 +14,14 @@ void InitBoxers();
 
 int main() {
     InitBoxers();
+    
+    Boxer User=userSelectBoxer();
+    
+    std::cout<<"You picked: "<< User.name;
  
     
     
-    printBoxerNames();
+    //printBoxerNames();
 
     return 0;
 }

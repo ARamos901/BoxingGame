@@ -31,5 +31,7 @@ extern Boxer IssacXaiver;
 
 void printBoxerNames();
 void InitBoxers();
+Boxer userSelectBoxer();
+
 
 #endif
