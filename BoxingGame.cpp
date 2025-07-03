@@ -56,12 +56,24 @@ Boxer userSelectBoxer(){
         std::cout<<"4. "<<IssacXaiver.name<<"\n";
         std::this_thread::sleep_for(std::chrono::seconds(1));
         std::cout<<"Please enter the Boxer you would like: ";
-        std::cin>>choice;
+        std::string stringErrorChecker;
+        
+        std::getline(std::cin,stringErrorChecker);;
+        
+        
+        
         
         //this clears the input buffer bc on default after it reads
         // the int choice it leaves a newline charcter in the input buffer
         //which would then throw off the conofirmation logic
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        
+        // Convert string to integer, set to -1 if invalid
+                if (stringErrorChecker.empty() || stringErrorChecker==""|| stringErrorChecker==" ") {
+                    choice = -1; // Invalid input
+                } else {
+                    choice = std::stoi(stringErrorChecker);
+                }
         
         std::this_thread::sleep_for(std::chrono::seconds(2));
         //based on what the user picks, it will switch the user's boxer
