@@ -15,13 +15,13 @@ struct Boxer {
     //name
     std::string name;
     //healthpoints
-    int HP;
+    short unsigned int HP;
     // damage
-    int DMG;
+    short unsigned int DMG;
     //quickness
-    int QCK;
+    short unsigned int QCK;
     //defense
-    int DEF;
+    short unsigned int DEF;
 };
 //Boxer's who are defined in BoxerStats.cpp
 extern Boxer RayStevens;
