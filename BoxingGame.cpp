@@ -13,6 +13,7 @@
 #include <chrono>
 #include <algorithm>
 #include <cctype>
+#include <cstdlib>
 
 //prints Boxer's stats
 void printStats(const Boxer& b) {
@@ -109,4 +110,41 @@ Boxer userSelectBoxer(){
             std::this_thread::sleep_for(std::chrono::seconds(3));
         }
     }
+}
+/*
+ 
+ !!!!!!!!!!
+ GAME LOGIC
+ !!!!!!!!!!
+ 
+ */
+
+
+
+bool attemptDodge(const Boxer& attacker,const Boxer& defender){
+    
+    //adds up both Boxer's quickness's
+    int totalSpeed=attacker.QCK+defender.QCK;
+    
+    //raw chance to dodge attack
+    int rawChance=(defender.QCK*100)/totalSpeed;
+    
+    int dodgeChance=std::min(rawChance,90);
+    
+    //rolls from 0-99
+    int randomRoll=rand()%100;
+    //returns a true or fale if the Boxer dodged the attack
+    return(randomRoll<dodgeChance);
+}
+
+int calculateDmg(const Boxer& attacker,const Boxer& defender){
+    //calucates how much dmg will be done by taking account the defenders defense attribute
+    int dmg=static_cast<int>(attacker.DMG)-(defender.DEF)/10;
+    //returns at the lowest, no damange done
+    return std::max(0,dmg);
+}
+
+void dmgDone(Boxer& defender,int dmgDone){
+    //figures out how much HP is left after dmg is done
+    defender.HP=std::max(0,defender.HP-dmgDone);
 }
