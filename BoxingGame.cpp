@@ -11,6 +11,8 @@
 #include "limits"
 #include <thread>
 #include <chrono>
+#include <algorithm>
+#include <cctype>
 
 //prints Boxer's stats
 void printStats(const Boxer& b) {
@@ -36,7 +38,6 @@ void printBoxerNames(){
     std::cout<<"Boxer 4:"<<IssacXaiver.name<<std::endl;
     std::cout<<"\n";
 }
-
 Boxer userSelectBoxer(){
     int choice;
     std::string PickConfirmation;
@@ -58,36 +59,43 @@ Boxer userSelectBoxer(){
         std::cout<<"Please enter the Boxer you would like: ";
         std::string stringErrorChecker;
         
-        std::getline(std::cin,stringErrorChecker);;
+        //gets the entrie line of user entry
+        std::getline(std::cin,stringErrorChecker);
+        
+        // converts user input to lowercase
+        std::string lowerInput = stringErrorChecker;
+        std::transform(lowerInput.begin(), lowerInput.end(), lowerInput.begin(), ::tolower);
         
         
         
-        
-        //this clears the input buffer bc on default after it reads
-        // the int choice it leaves a newline charcter in the input buffer
-        //which would then throw off the conofirmation logic
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        
-        // Convert string to integer, set to -1 if invalid
-                if (stringErrorChecker.empty() || stringErrorChecker==""|| stringErrorChecker==" ") {
-                    choice = -1; // Invalid input
-                } else {
-                    choice = std::stoi(stringErrorChecker);
-                }
+        // sees if it can convert the string to integer as a choice, otherwise it is set to -1
+        if (stringErrorChecker.empty() || stringErrorChecker==""|| stringErrorChecker==" ") {
+            choice = -1; // Invalid input
+        } else {
+            try {
+                choice = std::stoi(stringErrorChecker);
+            } catch (const std::exception&) {
+                choice = -1; // Invalid input if conversion fails
+            }
+        }
         
         std::this_thread::sleep_for(std::chrono::seconds(2));
-        //based on what the user picks, it will switch the user's boxer
-        switch (choice) {
-            case 1: UserBoxer=RayStevens;break;
-            case 2: UserBoxer=FrankRodgers;break;
-            case 3: UserBoxer=JayNeil;break;
-            case 4: UserBoxer=IssacXaiver;break;
-                //error checking to make sure user choice is valid
-            default:
-                std::cout<<"That was an invalid choice.Please choose again \n";
-                std::this_thread::sleep_for(std::chrono::seconds(1));
-            continue;}
         
+        // based on what the user picks, assign the user's boxer
+        if (choice == 1 || lowerInput == "ray stevens") {
+            UserBoxer = RayStevens;
+        } else if (choice == 2 || lowerInput == "frank rodgers") {
+            UserBoxer = FrankRodgers;
+        } else if (choice == 3 || lowerInput == "jay neil") {
+            UserBoxer = JayNeil;
+        } else if (choice == 4 || lowerInput == "issac xaiver") {
+            UserBoxer = IssacXaiver;
+        } else {
+            // error checker to make sure user choice is valid
+            std::cout<<"That was an invalid choice. Please choose again \n";
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            continue;
+        }
         
         //pick confirmation for user
         std::cout<<"You picked: "<< UserBoxer.name <<". Type \"Yes\" to confirm the choice or hit enter to choose again.";
